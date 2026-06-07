@@ -6,9 +6,10 @@ jobs:
     steps:
       - name: Full Lifecycle
         run: |
-          # Download directly to the current working directory
+          set -e
+          echo "Workspace: $GITHUB_WORKSPACE"
           curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
           unzip -o nuclei.zip
           chmod +x nuclei
-          # Execute using current directory path
+          ./nuclei -version
           ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
