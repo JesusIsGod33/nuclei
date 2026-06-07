@@ -6,8 +6,7 @@ jobs:
     steps:
       - name: Install and Run Nuclei
         run: |
-          if [ ! -f ./nuclei ]; then
-            curl -L https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_linux_amd64.zip -o nuclei.zip
-            unzip nuclei.zip
-          fi
+          # Use -L to follow redirects and -O to save the file
+          curl -L https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_3.3.0_linux_amd64.zip -o nuclei.zip
+          unzip -o nuclei.zip
           ./nuclei -target https://pay.wallet.tg -severity critical
