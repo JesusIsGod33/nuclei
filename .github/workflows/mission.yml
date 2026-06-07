@@ -4,21 +4,16 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Path Diagnostic
+      - name: Hard Reset Run
         run: |
-          set -e
-          echo "Scanning: https://pay.wallet.tg"
-          # Ensure clean environment
-          rm -f nuclei
-          # Direct download
-          curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
-          unzip -o nuclei.zip
-          # Check if binary is where we expect
-          if [ -f "nuclei" ]; then
-            chmod +x ./nuclei
-            ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
-          else
-            echo "Binary extraction failed"
-            ls -F
-            exit 1
-          fi
+          set -x
+          # Remove old remnants
+          rm -f nuclei nuclei.zip
+          # Explicit curl to silent file
+          curl -LO "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip"
+          unzip -o nuclei_3.3.0_linux_amd64.zip
+          # Verify binary
+          ls -la nuclei
+          ./nuclei -version
+          # Execute with explicit target
+          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
