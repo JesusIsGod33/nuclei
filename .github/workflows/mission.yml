@@ -4,6 +4,8 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Verbose Scan
+      - name: Debug Run
         run: |
-          ./nuclei -target https://pay.wallet.tg -severity critical -vv
+          ./nuclei -version
+          # Use -debug to see the actual HTTP exchange
+          ./nuclei -target https://pay.wallet.tg -debug
