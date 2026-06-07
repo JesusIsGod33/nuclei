@@ -4,6 +4,6 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Scan
+      - name: Verbose Scan
         run: |
-          ./nuclei -target https://pay.wallet.tg -severity critical -silent
+          ./nuclei -target https://pay.wallet.tg -severity critical -vv
