@@ -4,6 +4,6 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Fast Scan
+      - name: Scan
         run: |
-          ./nuclei -target https://pay.wallet.tg -severity critical -timeout 5 -rate-limit 50
+          ./nuclei -target https://pay.wallet.tg -severity critical -silent
