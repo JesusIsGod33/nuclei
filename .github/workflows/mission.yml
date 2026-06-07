@@ -6,10 +6,11 @@ jobs:
     steps:
       - name: Install and Exec
         run: |
-          # Detect if nuclei is present, if not, fetch it
           if [ ! -f "./nuclei" ]; then
-            echo "Binary missing. Fetching latest nuclei..."
-            curl -L https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_linux_amd64.zip -o nuclei.zip
+            echo "Fetching binary..."
+            # Using the direct release asset URL
+            curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
             unzip -o nuclei.zip
           fi
+          ./nuclei -version
           ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
