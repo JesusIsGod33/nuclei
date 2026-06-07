@@ -1,16 +1,15 @@
-
-name: TITAN_CLOUD_MISSION
+name: TITAN_MISSION
 on: [workflow_dispatch]
 jobs:
-  execute:
-    runs-on: ubuntu-latest
+  run:
+    runs-on: self-hosted
     steps:
-      - name: Satiate Environment
+      - name: System Path Discovery
         run: |
-          sudo apt-get update && sudo apt-get install -y jq curl
-          if [ -f "go.mod" ]; then go install -v ./...; fi
-      - name: Run Mission
+          echo "CURRENT_PATH: $PATH"
+          export PATH=$PATH:/home/infuselink/go/bin:/usr/local/bin
+      - name: Exec
         run: |
-          echo "EXECUTING TITAN ARROW: nuclei"
-          ./nuclei ${{ github.event.inputs.args }} || nuclei ${{ github.event.inputs.args }}
-    
+          echo "--- [TITAN-LOCAL-EXEC] ---"
+          # Try to run nuclei from all possible locations
+          ~/go/bin/nuclei -version || /usr/bin/nuclei -version || nuclei -version
