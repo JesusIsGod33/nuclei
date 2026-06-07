@@ -4,13 +4,14 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Exec
+      - name: Diagnostic
         run: |
-          # Go to the workspace directory
-          cd $GITHUB_WORKSPACE
-          # Force overwrite of binary if it exists, use -o for unzip
-          if [ ! -f "./nuclei" ]; then
-             unzip -o nuclei.zip
+          pwd
+          ls -F
+          # Try to execute existing binary in workspace
+          if [ -f "./nuclei" ]; then
+            ./nuclei -version
+          else
+            echo "Binary missing in $(pwd)"
+            exit 1
           fi
-          # Execute with explicit path
-          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/ -verbose
