@@ -4,5 +4,10 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Run Nuclei Scan
-        run: /home/infuselink/tools/runner/_work/nuclei/nuclei -target https://pay.wallet.tg -severity critical
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Nuclei Scan
+        uses: projectdiscovery/nuclei-action@v1
+        with:
+          target: https://pay.wallet.tg
+          severity: critical
