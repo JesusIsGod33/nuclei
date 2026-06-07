@@ -4,14 +4,11 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Diagnostic
+      - name: Full Lifecycle
         run: |
-          pwd
-          ls -F
-          # Try to execute existing binary in workspace
-          if [ -f "./nuclei" ]; then
-            ./nuclei -version
-          else
-            echo "Binary missing in $(pwd)"
-            exit 1
-          fi
+          # Download directly to the current working directory
+          curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
+          unzip -o nuclei.zip
+          chmod +x nuclei
+          # Execute using current directory path
+          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
