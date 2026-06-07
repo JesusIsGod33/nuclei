@@ -6,5 +6,4 @@ jobs:
     steps:
       - name: Fast Scan
         run: |
-          # Use fewer templates to ensure a fast, confirmed result
-          ./nuclei -target https://pay.wallet.tg -severity critical,high -stats -timeout 10
+          ./nuclei -target https://pay.wallet.tg -severity critical -timeout 5 -rate-limit 50
