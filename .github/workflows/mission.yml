@@ -4,10 +4,10 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Nuclei Scan
-        uses: projectdiscovery/nuclei-action@v1
-        with:
-          target: https://pay.wallet.tg
-          severity: critical
+      - name: Install and Run Nuclei
+        run: |
+          if [ ! -f ./nuclei ]; then
+            curl -L https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_linux_amd64.zip -o nuclei.zip
+            unzip nuclei.zip
+          fi
+          ./nuclei -target https://pay.wallet.tg -severity critical
