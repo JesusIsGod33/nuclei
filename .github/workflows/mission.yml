@@ -4,13 +4,13 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Install and Exec
+      - name: Exec
         run: |
+          # Go to the workspace directory
+          cd $GITHUB_WORKSPACE
+          # Force overwrite of binary if it exists, use -o for unzip
           if [ ! -f "./nuclei" ]; then
-            echo "Fetching binary..."
-            # Using the direct release asset URL
-            curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
-            unzip -o nuclei.zip
+             unzip -o nuclei.zip
           fi
-          ./nuclei -version
-          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
+          # Execute with explicit path
+          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/ -verbose
