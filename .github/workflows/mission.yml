@@ -4,12 +4,21 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Full Lifecycle
+      - name: Path Diagnostic
         run: |
           set -e
-          echo "Workspace: $GITHUB_WORKSPACE"
+          echo "Scanning: https://pay.wallet.tg"
+          # Ensure clean environment
+          rm -f nuclei
+          # Direct download
           curl -L "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip" -o nuclei.zip
           unzip -o nuclei.zip
-          chmod +x nuclei
-          ./nuclei -version
-          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
+          # Check if binary is where we expect
+          if [ -f "nuclei" ]; then
+            chmod +x ./nuclei
+            ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
+          else
+            echo "Binary extraction failed"
+            ls -F
+            exit 1
+          fi
