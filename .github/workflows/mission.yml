@@ -4,8 +4,5 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Debug Run
-        run: |
-          ./nuclei -version
-          # Use -debug to see the actual HTTP exchange
-          ./nuclei -target https://pay.wallet.tg -debug
+      - name: Basic Check
+        run: echo "RUNNER_IS_ALIVE"
