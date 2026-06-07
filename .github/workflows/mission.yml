@@ -1,0 +1,9 @@
+name: TITAN_MISSION
+on: [workflow_dispatch]
+jobs:
+  run:
+    runs-on: self-hosted
+    steps:
+      - name: Exec
+        run: |
+          /home/infuselink/go/bin/nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
