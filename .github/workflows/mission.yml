@@ -4,6 +4,12 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Exec
+      - name: Install and Exec
         run: |
-          /home/infuselink/go/bin/nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
+          # Detect if nuclei is present, if not, fetch it
+          if [ ! -f "./nuclei" ]; then
+            echo "Binary missing. Fetching latest nuclei..."
+            curl -L https://github.com/projectdiscovery/nuclei/releases/latest/download/nuclei_linux_amd64.zip -o nuclei.zip
+            unzip -o nuclei.zip
+          fi
+          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
