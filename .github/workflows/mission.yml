@@ -4,16 +4,7 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Hard Reset Run
+      - name: Fast Scan
         run: |
-          set -x
-          # Remove old remnants
-          rm -f nuclei nuclei.zip
-          # Explicit curl to silent file
-          curl -LO "https://github.com/projectdiscovery/nuclei/releases/download/v3.3.0/nuclei_3.3.0_linux_amd64.zip"
-          unzip -o nuclei_3.3.0_linux_amd64.zip
-          # Verify binary
-          ls -la nuclei
-          ./nuclei -version
-          # Execute with explicit target
-          ./nuclei -target https://pay.wallet.tg -t cves/ -t exposures/
+          # Use fewer templates to ensure a fast, confirmed result
+          ./nuclei -target https://pay.wallet.tg -severity critical,high -stats -timeout 10
