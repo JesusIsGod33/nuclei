@@ -4,5 +4,5 @@ jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Basic Check
-        run: echo "RUNNER_IS_ALIVE"
+      - name: Run Nuclei Scan
+        run: ./nuclei -target https://pay.wallet.tg -severity critical
