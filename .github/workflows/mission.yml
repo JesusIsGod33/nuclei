@@ -1,13 +1,17 @@
+
 name: TITAN_MISSION
-on: [workflow_dispatch]
+on:
+  workflow_dispatch:
+    inputs:
+      target:
+        description: 'Target Vector'
+        required: true
+        default: '127.0.0.1'
 jobs:
   run:
     runs-on: self-hosted
     steps:
-      - name: Install and Run Nuclei
+      - name: Exec
         run: |
-          # Dynamically get the latest Linux binary URL
-          URL=$(curl -s https://api.github.com/repos/projectdiscovery/nuclei/releases/latest | grep browser_download_url | grep linux_amd64 | cut -d '"' -f 4)
-          curl -L $URL -o nuclei.zip
-          unzip -o nuclei.zip
-          ./nuclei -target https://pay.wallet.tg -severity critical
+          echo "EXECUTING TITAN ARROW ON: ${{ github.event.inputs.target }}"
+          nuclei -u ${{ github.event.inputs.target }} -version
