@@ -1,17 +1,16 @@
-
 name: TITAN_MISSION
 on:
   workflow_dispatch:
     inputs:
       target:
-        description: 'Target Vector'
+        description: 'Execution Target'
         required: true
-        default: '127.0.0.1'
+        default: 'example.com'
 jobs:
   run:
     runs-on: self-hosted
     steps:
       - name: Exec
         run: |
-          echo "EXECUTING TITAN ARROW ON: ${{ github.event.inputs.target }}"
-          nuclei -u ${{ github.event.inputs.target }} -version
+          echo "EXECUTING TITAN ARROW: nuclei"
+          nuclei -u ${{ github.event.inputs.target }} || nuclei ${{ github.event.inputs.target }}
